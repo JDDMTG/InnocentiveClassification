@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from sklearn.ensemble import RandomForestClassifier
+
 
 def generateModel(model, modelArrParams, modelDictParams, inData, outData):
     if modelArrParams is None:
