@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import dataMngr as dm
+import compInfo
 
 def preprocess(fileName, train=True):
     df = dm.file2Dataframe(fileName)
@@ -12,9 +13,15 @@ def preprocess(fileName, train=True):
     dm.save(inputFileName, inputArr)
     
     return inputArr, outputArr
-    
-testFile = '/Users/user/Documents/Innocentive_Challenge/Innocentive_500_Sample.csv'
 
-inA, outA = preprocess(testFile)
-dm.saveInputOutput(inA, outA, '../testin.csv', '../testout.csv')
-dm.generateModel('../testin.csv', '../testout.csv')
+print compInfo.dataPoints500File
+inA, outA = preprocess(compInfo.dataPoints500File)
+
+print inA.shape
+print outA.shape
+
+loadedInA = dm.load(compInfo.outputDataDirectory + 'Innocentive_500_Sample_input.np')
+loadedOutA = dm.load(compInfo.outputDataDirectory + 'Innocentive_500_Sample_output.np')
+
+print loadedInA.shape
+print loadedOutA.shape
