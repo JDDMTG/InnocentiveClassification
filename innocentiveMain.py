@@ -18,7 +18,3 @@ testFile = '/Users/user/Documents/Innocentive_Challenge/Innocentive_500_Sample.c
 inA, outA = preprocess(testFile)
 dm.saveInputOutput(inA, outA, '../testin.csv', '../testout.csv')
 dm.generateModel('../testin.csv', '../testout.csv')
-
-
-# print inA.shape
-# print outA.shape
