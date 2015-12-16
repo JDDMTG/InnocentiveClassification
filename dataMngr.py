@@ -84,4 +84,9 @@ def generateModel(inFilePath, outFilePath):
     print outData
     clf = RandomForestClassifier(n_estimators=10)
     clf = clf.fit(inData, outData)
-
+    
+def saveModel(fileName, modelInfo):
+    #modelInfo is a dict with the following keys:
+    #modelName, modelParameters, savedModelFileName
+    #numInstances, percentYesCorrect and percentNoCorrect
+    pass
