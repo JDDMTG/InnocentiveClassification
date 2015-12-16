@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from sklearn.ensemble import RandomForestClassifier
 
-def generateModel(inFilePath, outFilePath):
-    inData = file2Data(inFilePath)
-    outData = file2Data(outFilePath)
-    print len(outData)
-    print outData
-    clf = RandomForestClassifier(n_estimators=10)
-    clf = clf.fit(inData, outData)
+def generateModel(model, modelArrParams, modelDictParams, inData, outData):
+    if modelArrParams is None:
+        modelArrParams = []
+    if modelDictParams is None:
+        modelDictParams = {}
+    standardModel = model(*modelArrParams, **modelDictParams)
+    return standardModel.fit(inData, outData)
