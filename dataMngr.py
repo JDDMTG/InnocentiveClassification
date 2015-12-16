@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
+import csv
 from dataInfo import columnInfo
 
 def processDataframeForNP(df):
@@ -22,3 +23,10 @@ def saveDataframeAsArray(df):
 
 def seperateTestInputOutput(df):
     pass
+
+def dataToInputOutput(fileName):
+  with open(fileName, 'wb') as csvfile:
+    linelist = [line for line in csvfile.readlines()]
+    print linelist
+
+dataToInputOutput('../InnoCentive_Challenge_9933493_training_data.csv')
