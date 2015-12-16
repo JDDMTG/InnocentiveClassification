@@ -13,9 +13,12 @@ def preprocess(fileName, train=True):
     
     return inputArr, outputArr
     
-testFile = '/Users/JuanDa/Google Drive/Innocentive Marketing ML Challenge/Innocentive_500_Sample.csv'
+testFile = '/Users/user/Documents/Innocentive_Challenge/Innocentive_500_Sample.csv'
 
 inA, outA = preprocess(testFile)
+dm.saveInputOutput(inA, outA, '../testin.csv', '../testout.csv')
+dm.generateModel('../testin.csv', '../testout.csv')
 
-print inA.shape
-print outA.shape
+
+# print inA.shape
+# print outA.shape

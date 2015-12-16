@@ -5,9 +5,10 @@ import numpy as np
 import cPickle as pickle
 from os import path
 from dataInfo import columnInfo
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_extraction import DictVectorizer as DV
 
 def processDiscDataframe(df):    
-    from sklearn.feature_extraction import DictVectorizer as DV
     vectorizer = DV( sparse = False )
     df = df.to_dict('records')
     numpyData = vectorizer.fit_transform(df)
@@ -58,22 +59,29 @@ def makeFileName(inFileName, train=True):
     
     return inputFileName, outputFileName
 
-def dataToInputOutput(fileName):
-    pathDir = "../" # must be run in the directory where the file is
-    with open(pathDir + fileName, 'rb') as fullFile:
-        reader = csv.reader(fullFile)
-        inputFile = csv.writer(open(pathDir + "Input_" + fileName, 'wb'))
-        outputFile = csv.writer(open(pathDir + "Output_" + fileName, 'wb'))
-        for row in reader:
-            inputRow = []
-            for x in xrange(len(row)):
-                if x == 1: # where output is located
-                    outputFile.writerow(row[x])
-                    print row[x]
-                else:
-                    inputRow.append(row[x])
-                if x == (len(row) - 1):
-                    inputFile.writerow(inputRow)
+def writeToFile(data, writer):
+    for el in data:
+        writer.writerow(el)
 
-#
-# dataToInputOutput('Innocentive_500_Sample.csv')
+def saveInputOutput(inA, outA, inFilePath, outFilePath):
+    inputFile = csv.writer(open(inFilePath, 'wb'))
+    outputFile = csv.writer(open(outFilePath, 'wb'))
+    writeToFile(inA, inputFile)
+    writeToFile(outA, outputFile)
+
+def file2Data(filePath):
+    fileData = []
+    with open(filePath, 'rb') as fp:
+        reader = csv.reader(fp)
+        for row in reader:
+            fileData.append(row)
+    return fileData
+
+def generateModel(inFilePath, outFilePath):
+    inData = file2Data(inFilePath)
+    outData = file2Data(outFilePath)
+    print len(outData)
+    print outData
+    clf = RandomForestClassifier(n_estimators=10)
+    clf = clf.fit(inData, outData)
+
