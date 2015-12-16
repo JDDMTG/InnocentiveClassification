@@ -5,7 +5,6 @@ import numpy as np
 import cPickle as pickle
 from os import path
 from dataInfo import columnInfo
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction import DictVectorizer as DV
 
 def processDiscDataframe(df):    
@@ -76,14 +75,6 @@ def file2Data(filePath):
         for row in reader:
             fileData.append(row)
     return fileData
-
-def generateModel(inFilePath, outFilePath):
-    inData = file2Data(inFilePath)
-    outData = file2Data(outFilePath)
-    print len(outData)
-    print outData
-    clf = RandomForestClassifier(n_estimators=10)
-    clf = clf.fit(inData, outData)
     
 def saveModel(fileName, modelInfo):
     #modelInfo is a dict with the following keys:
