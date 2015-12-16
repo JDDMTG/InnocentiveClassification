@@ -76,8 +76,13 @@ def file2Data(filePath):
             fileData.append(row)
     return fileData
     
-def saveModel(fileName, modelInfo):
+def saveModelInfo(fileName, modelInfo):
     #modelInfo is a dict with the following keys:
-    #modelName, modelParameters, savedModelFileName
-    #numInstances, percentYesCorrect and percentNoCorrect
-    pass
+    #modelName, modelParameters, percentYesCorrect 
+    #percentNoCorrect, numInstances, savedModelFileName
+    #it will be printed in that order
+    order = ['modelName', 'modelParameters', 'percentYesCorrect',
+    'percentNoCorrect', 'numInstances', 'savedModelFileName']
+    csvRow = [modelInfo[x] for x in order]
+    with open(fileName, 'ab') as f:
+        f.write(csvRow)
