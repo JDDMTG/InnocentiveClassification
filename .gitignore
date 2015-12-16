@@ -4,3 +4,9 @@ exp.py
 
 # ignore any of the saved numpy files
 *.np
+
+# ignore personal computer information changes
+compInfo.py
+
+# ignore all compiled python files
+*.pyc
