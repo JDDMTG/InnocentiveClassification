@@ -6,6 +6,7 @@ import cPickle as pickle
 from os import path
 from dataInfo import columnInfo
 from sklearn.feature_extraction import DictVectorizer as DV
+from compInfo import outputDataDirectory
 
 def processDiscDataframe(df):    
     vectorizer = DV( sparse = False )
@@ -40,8 +41,7 @@ def save(fileName, obj):
     pass
 
 def load(fileName):
-    pickle.load( open( fileName, "rb" ) )
-    pass
+    return pickle.load( open( fileName, "rb" ) )
 
 def seperateTestInputOutput(df):
     pass
@@ -52,9 +52,9 @@ def makeFileName(inFileName, train=True):
     
     outputFileName = None
     if train:
-        outputFileName = fileName + '_output.np'
+        outputFileName = outputDataDirectory + fileName + '_output.np'
     
-    inputFileName = fileName + '_input.np'
+    inputFileName = outputDataDirectory + fileName + '_input.np'
     
     return inputFileName, outputFileName
 
