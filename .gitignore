@@ -1,3 +1,6 @@
 
 # ignore expiremental python files
 exp.py
+
+# ignore any of the saved numpy files
+*.np
