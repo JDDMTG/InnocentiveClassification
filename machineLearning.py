@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from sklearn.ensemble import RandomForestClassifier
 
 def generateModel(inFilePath, outFilePath):
     inData = file2Data(inFilePath)
