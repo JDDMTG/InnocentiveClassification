@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-from scikit_learn import RandomForest
+from sklearn.ensemble import RandomForestClassifier
+
 models = {
-    1:{
+    RandomForest:{
         'modelName':'rForest_n_10',
         'modelParameters': {
             'n':10
             }, 
-        'model': RandomForest.model,
+        'model': RandomForest,
         'savedModelFileName':'rForest_n_10.mod',
         'percentYesCorrect': None,
         'percentNoCorrect': None, 
