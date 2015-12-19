@@ -4,28 +4,39 @@ from sklearn.cross_validation import cross_val_score
 import dataMngr as dm
 
 # only generated model, doesn't attempt to fit model
-def generateModel(model, modelArrParams, modelDictParams):
+def generateModel(model, modelArrParams, modelDictParams, inData, outData):
     if modelArrParams is None:
         modelArrParams = []
     if modelDictParams is None:
         modelDictParams = {}
     standardModel = model(*modelArrParams, **modelDictParams)
-    return standardModel
+    return standardModel.fit(inData, outData.ravel())
 
-def generateModelScores(stdModel, inData, outData, modelFileName, statisticsFileName):
-  outData = outData.ravel()
-  scores = cross_val_score(stdModel, inData, outData)
-  saveModelAndScores(modelFileName, stdModel, statisticsFileName, scores)
-  return scores.mean()
+def percentCorrect(modelData, outputData):
+    labeledCorrectlyCount = 0
+    labeledIncorrectlyCount = 0
+    for i in xrange(len(modelData)):
+        if modelData[i] == outputData[i]:
+            labeledCorrectlyCount += 1
+        else:
+            labeledIncorrectlyCount += 1
+    return float(labeledCorrectlyCount)/len(modelData)
 
-def saveModelAndScores(modelFileName, stdModel, statisticsFileName, scores):
-  dm.save(modelFileName, stdModel)
-  dm.save(statisticsFileName, scores.mean())
+def generateModelScores(generatedModel, inData, outData, modelFileName, statisticsFileName):
+  predicted = generatedModel.predict(inData)
+  pc = percentCorrect(predicted, outData)
+  saveModelAndScores(modelFileName, generatedModel, statisticsFileName, pc)
+  return pc
 
-def generateModelAndScores(model, modelArrParams, modelDictParams, inData, outData, numRuns):
-  for x in xrange(numRuns):
-    stdModel = generateModel(model, modelArrParams, modelDictParams)
-    print generateModelScores(stdModel, inData, outData, "RF" + str(x) + ".np", "RF_Stats" + str(x) + ".np")
+def saveModelAndScores(modelFileName, generatedModel, statisticsFileName, scores):
+  dm.save(modelFileName, generatedModel)
+  dm.save(statisticsFileName, scores)
+
+def modelDriver(model, modelArrParams, modelDictParams, inData, outData):
+  generatedModel = generateModel(model, modelArrParams, modelDictParams, inData, outData)
+  pc = generateModelScores(generatedModel, inData, outData, "RF.np", "RF_Stats.np")
+  print pc
+
+modelDriver(RandomForestClassifier, None, None, dm.load('Innocentive_500_Sample_input.np'), dm.load('Innocentive_500_Sample_output.np'))
 
 
-print generateModelAndScores(RandomForestClassifier, None, None, dm.load("Innocentive_500_Sample_input.np"), dm.load("Innocentive_500_Sample_output.np"), 5)
