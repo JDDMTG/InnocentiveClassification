@@ -25,3 +25,6 @@ loadedOutA = dm.load(compInfo.outputDataDirectory + 'Innocentive_500_Sample_outp
 
 print loadedInA.shape
 print loadedOutA.shape
+
+# fullDataIn, fullDataOut = preprocess(compInfo.fullDataPath)
+# testDataIn, testDataOut = preprocess(compInfo.originalDataDirectory + compInfo.testingPath)

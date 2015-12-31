@@ -2,6 +2,7 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.cross_validation import cross_val_score
 import dataMngr as dm
+import compInfo as ci
 
 # only generated model, doesn't attempt to fit model
 def generateModel(model, modelArrParams, modelDictParams, inData, outData):
@@ -37,6 +38,11 @@ def modelDriver(model, modelArrParams, modelDictParams, inData, outData):
   pc = generateModelScores(generatedModel, inData, outData, "RF.np", "RF_Stats.np")
   print pc
 
-modelDriver(RandomForestClassifier, None, None, dm.load('Innocentive_500_Sample_input.np'), dm.load('Innocentive_500_Sample_output.np'))
+def generateTestOutput(generatedModel, inData, outDataName):
+  outData = generatedModel.predict(inData)
+  dm.writeToFilePath(outData, outDataName)
 
-
+# modelDriver(RandomForestClassifier, None, None, dm.load('Innocentive_500_Sample_input.np'), dm.load('Innocentive_500_Sample_output.np'))
+# modelDriver(RandomForestClassifier, None, None, dm.load(ci.outputDataDirectory + ci.inputDataPath), dm.load(ci.outputDataDirectory + ci.outputDataPath))
+# generateTestOutput(dm.load('RF.np'), ci.outputDataDirectory + ci.testingInputPath, ci.outputDataDirectory + ci.)
+generateTestOutput(dm.load('RF.np'), ci.outputDataDirectory + ci.testingInputPath, "OutputData.csv")

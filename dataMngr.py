@@ -62,6 +62,10 @@ def writeToFile(data, writer):
     for el in data:
         writer.writerow(el)
 
+def writeToFilePath(data, filePath):
+    writer = csv.writer(open(filePath, 'wb'))
+    writeToFile(data, writer)
+
 def saveInputOutput(inA, outA, inFilePath, outFilePath):
     inputFile = csv.writer(open(inFilePath, 'wb'))
     outputFile = csv.writer(open(outFilePath, 'wb'))
