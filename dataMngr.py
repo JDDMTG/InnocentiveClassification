@@ -14,6 +14,13 @@ def processDiscDataframe(df):
     numpyData = vectorizer.fit_transform(df)
     return numpyData
 
+def processTesting(dfTesting, dfTraining):
+    dfTesting = dfTesting.drop(columnInfo['extraneous'], axis=1) #Unecessary Info
+    dfTraining = dfTraining.drop(columnInfo['extraneous'], axis=1) #Unecessary Info
+
+    
+
+
 def processDataframeForNP(df, train=True):
     df = df.drop(columnInfo['extraneous'], axis=1) #Unecessary Info
     
