@@ -3,6 +3,7 @@ import pandas as pd
 import csv
 import numpy as np
 import cPickle as pickle
+import compInfo as ci
 from os import path
 from dataInfo import columnInfo
 from sklearn.feature_extraction import DictVectorizer as DV
@@ -14,12 +15,29 @@ def processDiscDataframe(df):
     numpyData = vectorizer.fit_transform(df)
     return numpyData
 
+def makeFitFromDF(df):
+    vectorizer = DV(sparse = False)
+    df = df.to_dict('records')
+    return vectorizer.fit(df)
+
 def processTesting(dfTesting, dfTraining):
-    dfTesting = dfTesting.drop(columnInfo['extraneous'], axis=1) #Unecessary Info
-    dfTraining = dfTraining.drop(columnInfo['extraneous'], axis=1) #Unecessary Info
-
+    testInputDiscrete = dfTesting[columnInfo['discrete']]
+    testInputContinuous = dfTesting[columnInfo['continous']]
     
+    fit = makeFitFromDF(dfTraining[columnInfo['discrete']])
+    testInputDiscreteDict = testInputDiscrete.to_dict('records')
 
+    testInputDiscrete = fit.transform(testInputDiscreteDict)
+    testInputContinuous = inputContinuous.as_matrix()
+
+    inputData = np.concatenate(( testInputContinuous, testInputDiscrete ), axis=1)
+    return inputData
+
+def makeDFFromCSV():
+    dfTraining = file2Dataframe(ci.originalDataDirectory + ci.trainingPathCSV)
+    dfTesting = file2Dataframe(ci.originalDataDirectory + ci.testingInputPathCSV)
+    save(outputDataDirectory + "dataFrameTraining", dfTraining)
+    save(outputDataDirectory + "dataFrameTesting", dfTesting)
 
 def processDataframeForNP(df, train=True):
     df = df.drop(columnInfo['extraneous'], axis=1) #Unecessary Info
@@ -28,7 +46,7 @@ def processDataframeForNP(df, train=True):
     if train:
         outputData = df[columnInfo['target']]
         outputData = outputData.as_matrix()
-    df.drop(columnInfo['target'], axis=1)
+    df = df.drop(columnInfo['target'], axis=1)
     
     inputDiscrete = df[columnInfo['discrete']]
     inputContinuous = df[columnInfo['continous']]
@@ -97,3 +115,5 @@ def saveModelInfo(fileName, modelInfo):
     csvRow = [modelInfo[x] for x in order]
     with open(fileName, 'ab') as f:
         f.write(csvRow)
+
+makeDFFromCSV()
