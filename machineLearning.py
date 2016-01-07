@@ -42,11 +42,17 @@ def generateTestOutput(generatedModel, inData, outDataName):
   outData = generatedModel.predict(inData)
   dm.writeToFilePath(outData, outDataName)
 
+def makeEditedTestOutput(generatedModel, inData, outDataName):
+  inData[425936][6] = 0
+  inData[617750][6] = 0
+  inData[734618][6] = 0
+  generatedModel(generatedModel, inData, outDataName)
+
 # modelDriver(RandomForestClassifier, None, None, dm.load('Innocentive_500_Sample_input.np'), dm.load('Innocentive_500_Sample_output.np'))
 # modelDriver(RandomForestClassifier, None, None, dm.load(ci.outputDataDirectory + ci.inputDataPath), dm.load(ci.outputDataDirectory + ci.outputDataPath))
 # generateTestOutput(dm.load('RF.np'), ci.outputDataDirectory + ci.testingInputPath, ci.outputDataDirectory + ci.)
 # generateTestOutput(dm.load('RF.np'), dm.load(ci.outputDataDirectory + ci.testingInputPath), "OutputData.csv")
 # print dm.load(ci.outputDataDirectory + ci.testingInputPath)
-#inputD = dm.load(ci.outputDataDirectory + ci.inputDataPath)
-#print inputD.shape
+makeEditedTestOutput(dm.load('RF.np'), dm.load(ci.outputDataDirectory + ci.testingDF), "OutputData.csv")
+
 

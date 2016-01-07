@@ -28,17 +28,20 @@ def processTesting(dfTesting, dfTraining):
     testInputDiscreteDict = testInputDiscrete.to_dict('records')
 
     testInputDiscrete = fit.transform(testInputDiscreteDict)
-    testInputContinuous = inputContinuous.as_matrix()
+    testInputContinuous = testInputContinuous.as_matrix()
 
     inputData = np.concatenate(( testInputContinuous, testInputDiscrete ), axis=1)
     return inputData
 
 def makeDFFromCSV():
+    print "working"
     dfTraining = file2Dataframe(ci.originalDataDirectory + ci.trainingPathCSV)
     dfTesting = file2Dataframe(ci.originalDataDirectory + ci.testingInputPathCSV)
-    save(outputDataDirectory + "dataFrameTraining", dfTraining)
-    save(outputDataDirectory + "dataFrameTesting", dfTesting)
-
+    print "still working"
+    save(outputDataDirectory + "dataFrameTraining.df", dfTraining)
+    save(outputDataDirectory + "dataFrameTesting.df", dfTesting)
+    print "stilll work"    
+    
 def processDataframeForNP(df, train=True):
     df = df.drop(columnInfo['extraneous'], axis=1) #Unecessary Info
     
@@ -116,4 +119,10 @@ def saveModelInfo(fileName, modelInfo):
     with open(fileName, 'ab') as f:
         f.write(csvRow)
 
-makeDFFromCSV()
+def makeTestingDF():
+    makeDFFromCSV()
+    trainingDF = load(ci.outputDataDirectory + 'dataFrameTraining.df')
+    testingDF = load(ci.outputDataDirectory + 'dataFrameTesting.df')
+    testingData = processTesting(testingDF, trainingDF)
+    save(ci.outputDataDirectory + ci.testingOutputPath, testingData)
+    print testingData.shape
