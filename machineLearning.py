@@ -42,12 +42,6 @@ def generateTestOutput(generatedModel, inData, outDataName):
   outData = generatedModel.predict(inData)
   dm.writeToFilePath(outData, outDataName)
 
-def makeEditedTestOutput(generatedModel, inData, outDataName):
-  inData[425936][6] = 0
-  inData[617750][6] = 0
-  inData[734618][6] = 0
-  generateTestOutput(generatedModel, inData, outDataName)
-
 def fixContNaNColoumns(data, col, rows):
   for row in rows:
     data[row][col] = 0
@@ -69,5 +63,3 @@ def oneShotFixContNaNColoumns():
   dm.save(ci.outputDataDirectory + ci.testingInputPathFixed, testInput)
   print 'done'
 
-# makeEditedTestOutput(dm.load('RF.np'), dm.load(ci.outputDataDirectory + ci.testingInputPathFitted), "OutputData.csv")
-oneShotFixContNaNColoumns()
