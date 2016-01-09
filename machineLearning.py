@@ -46,13 +46,28 @@ def makeEditedTestOutput(generatedModel, inData, outDataName):
   inData[425936][6] = 0
   inData[617750][6] = 0
   inData[734618][6] = 0
-  generatedModel(generatedModel, inData, outDataName)
+  generateTestOutput(generatedModel, inData, outDataName)
 
-# modelDriver(RandomForestClassifier, None, None, dm.load('Innocentive_500_Sample_input.np'), dm.load('Innocentive_500_Sample_output.np'))
-# modelDriver(RandomForestClassifier, None, None, dm.load(ci.outputDataDirectory + ci.inputDataPath), dm.load(ci.outputDataDirectory + ci.outputDataPath))
-# generateTestOutput(dm.load('RF.np'), ci.outputDataDirectory + ci.testingInputPath, ci.outputDataDirectory + ci.)
-# generateTestOutput(dm.load('RF.np'), dm.load(ci.outputDataDirectory + ci.testingInputPath), "OutputData.csv")
-# print dm.load(ci.outputDataDirectory + ci.testingInputPath)
-makeEditedTestOutput(dm.load('RF.np'), dm.load(ci.outputDataDirectory + ci.testingDF), "OutputData.csv")
+def fixContNaNColoumns(data, col, rows):
+  for row in rows:
+    data[row][col] = 0
+  sumCol = sum(data[:, col])
+  numRows, _ = data.shape
+  numRows = numRows - len(rows)
+  avg = sumCol/numRows
+  for row in rows:
+    data[row][col] = avg
+  return data
 
+def oneShotFixContNaNColoumns():
+  print 'starting'
+  fileName = ci.outputDataDirectory + ci.testingInputPathFitted
+  testInput = dm.load(fileName)
+  print 'loaded'
+  print testInput.shape
+  testInput = fixContNaNColoumns(testInput, 6, [425936, 617750, 734618])
+  dm.save(ci.outputDataDirectory + ci.testingInputPathFixed, testInput)
+  print 'done'
 
+# makeEditedTestOutput(dm.load('RF.np'), dm.load(ci.outputDataDirectory + ci.testingInputPathFitted), "OutputData.csv")
+oneShotFixContNaNColoumns()

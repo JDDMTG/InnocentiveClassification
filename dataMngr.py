@@ -9,6 +9,18 @@ from dataInfo import columnInfo
 from sklearn.feature_extraction import DictVectorizer as DV
 from compInfo import outputDataDirectory
 
+def preprocess(fileName, train=True):
+    df = file2Dataframe(fileName)
+    inputArr, outputArr = processDataframeForNP(df, train)
+    inputFileName, outputFileName = makeFileName(fileName)
+    
+    if train:
+        save(outputFileName, outputArr)
+        
+    save(inputFileName, inputArr)
+    
+    return inputArr, outputArr
+
 def processDiscDataframe(df):    
     vectorizer = DV( sparse = False )
     df = df.to_dict('records')
@@ -88,7 +100,7 @@ def makeFileName(inFileName, train=True):
 
 def writeToFile(data, writer):
     for el in data:
-        writer.writerow(el)
+        writer.writerow([el])
 
 def writeToFilePath(data, filePath):
     writer = csv.writer(open(filePath, 'wb'))
@@ -124,5 +136,5 @@ def makeTestingDF():
     trainingDF = load(ci.outputDataDirectory + 'dataFrameTraining.df')
     testingDF = load(ci.outputDataDirectory + 'dataFrameTesting.df')
     testingData = processTesting(testingDF, trainingDF)
-    save(ci.outputDataDirectory + ci.testingOutputPath, testingData)
+    save(ci.outputDataDirectory + ci.testingInputPathFitted, testingData)
     print testingData.shape

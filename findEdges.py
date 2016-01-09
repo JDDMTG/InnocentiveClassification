@@ -8,3 +8,5 @@ def findEdge(array2dim):
         print "Row,Col = " + str(r) + "," + str(c)
         print array2dim[r][c]
   return False
+
+def outputFile
