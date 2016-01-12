@@ -5,17 +5,19 @@ import machineLearning as ML
 from modelsInfo import models
 #ML.generateTestOutput(dm.load('RF.np'), dm.load(ci.outputDataDirectory + ci.testingInputPathFixed), "OutputData.csv")
 
+def createAndSaveModel(modelDict, indata, outdata, outDict = ''):
+    model = ML.generateModel(modelDict['model'], modelDict['modelArrParameters'],
+                          modelDict['modelDictParameters'], indata, outdata)
+    dm.save(outDict + model['savedModelFileName'])
+    return model
+
+
 indata = dm.load(ci.outputDataDirectory + ci.inputDataPath)
 outdata = dm.load(ci.outputDataDirectory + ci.outputDataPath)
 
-rf200 = models['RandomForest200']
-rf = ML.generateModel(rf200['model'], rf200['modelArrParameters'],
-                 rf200['modelDictParameters'], indata, outdata)
-dm.save(ci.outputDataDirectory + rf200['savedModelFileName'], rf)
-
-naiveBayes = models['NaiveBayesGaussian']
-nb = ML.generateModel(naiveBayes['model'], naiveBayes['modelArrParameters'],
-                 naiveBayes['modelDictParameters'], indata, outdata)
-                 
-dm.save(ci.outputDataDirectory + naiveBayes['savedModelFileName'], nb)
-
+createAndSaveModel(models['RandomForest200'], indata, outdata, 
+                   ci.outputDataDirectory)
+                   
+createAndSaveModel(models['NaiveBayesGaussian'], indata, outdata, 
+                   ci.outputDataDirectory)
+                   
