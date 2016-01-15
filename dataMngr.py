@@ -8,7 +8,7 @@ from os import path
 from dataInfo import columnInfo
 from sklearn.feature_extraction import DictVectorizer as DV
 from compInfo import outputDataDirectory
-
+from os.path import splitext
 def preprocess(fileName, train=True):
     df = file2Dataframe(fileName)
     inputArr, outputArr = processDataframeForNP(df, train)
@@ -138,3 +138,8 @@ def makeTestingDF():
     testingData = processTesting(testingDF, trainingDF)
     save(ci.outputDataDirectory + ci.testingInputPathFitted, testingData)
     print testingData.shape
+
+def saveCSVasNP(csvFile):
+    csv = np.genfromtxt (csvFile, delimiter=",")
+    fileName = splitext(csvFile)[0] + ".np"
+    save(fileName, csv)
