@@ -15,7 +15,16 @@ models = {
         'modelDictParameters': {
             'n_estimators':200,
             'n_jobs': -1
-            }, 
+            },
+    'RandomForest200Entropy':{
+        'modelName':'rForest_n_200',
+        'modelArrParameters': None,
+        'savedModelFileName':'rForest_n_200Ent.mod',
+        'modelDictParameters': {
+            'criterion': 'entropy',
+            'n_estimators':200,
+            'n_jobs': -1
+    },
         'model': RandomForestClassifier,
         'savedModelFileName':'rForest_n_200.mod',
         'percentYesCorrect': None,

@@ -29,5 +29,5 @@ for mlp in multilayerPerceptrons:
     
 """
 
-model = createAndSaveModel(models['AdaboostDecisionTree'], indata, outdata, 
+model = createAndSaveModel(models['RandomForest200Entropy'], indata, outdata, 
                    ci.outputDataDirectory)
