@@ -17,7 +17,7 @@ models = {
             'n_jobs': -1
             },
     'RandomForest200Entropy':{
-        'modelName':'rForest_n_200',
+        'modelName':'rForest_n_200_Ent',
         'modelArrParameters': None,
         'savedModelFileName':'rForest_n_200Ent.mod',
         'modelDictParameters': {

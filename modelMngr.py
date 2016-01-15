@@ -1,4 +1,4 @@
-import dataMngr as dm
+from dataMngr import save, load
 import compInfo as ci
 import machineLearning as ML
 from modelsInfo import models
@@ -6,12 +6,12 @@ from modelsInfo import models
 def createAndSaveModel(modelDict, indata, outdata, outDict = ''):
     model = ML.generateModel(modelDict['model'], modelDict['modelArrParameters'],
                           modelDict['modelDictParameters'], indata, outdata)
-    dm.save(outDict + modelDict['savedModelFileName'], model)
+    save(outDict + modelDict['savedModelFileName'], model)
     return model
 
 
-indata = dm.load(ci.outputDataDirectory + ci.inputDataPath)
-outdata = dm.load(ci.outputDataDirectory + ci.outputDataPath)
+indata = load(ci.outputDataDirectory + ci.inputDataPath)
+outdata = load(ci.outputDataDirectory + ci.outputDataPath)
 
 
 """
