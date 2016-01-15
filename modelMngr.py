@@ -1,7 +1,15 @@
-from dataMngr import save, load
 import compInfo as ci
 import machineLearning as ML
 from modelsInfo import models
+import cpickle as pickle
+
+def save(fileName, obj):
+    pickle.dump( obj, open( fileName, "wb" ) )
+    pass
+
+def load(fileName):
+    return pickle.load( open( fileName, "rb" ) )
+
 
 def createAndSaveModel(modelDict, indata, outdata, outDict = ''):
     model = ML.generateModel(modelDict['model'], modelDict['modelArrParameters'],
