@@ -10,8 +10,9 @@ def createAndSaveModel(modelDict, indata, outdata, outDict = ''):
     return model
 
 
-indata = load(ci.outputDataDirectory + ci.inputDataPath)
-outdata = load(ci.outputDataDirectory + ci.outputDataPath)
+indata = load(ci.dataDirectory + ci.inputDataPath)
+outdata = load(ci.dataDirectory + ci.outputDataPath)
+testingdata = load(ci.dataDirectory + ci.testingInputPathFixed)
 
 
 """
@@ -29,5 +30,12 @@ for mlp in multilayerPerceptrons:
     
 """
 
-model = createAndSaveModel(models['RandomForest200Entropy'], indata, outdata, 
-                   ci.outputDataDirectory)
+mArr = ['MultilayerPerceptronStandard', 'MultilayerPerceptron10050', 
+         'MultilayerPerceptron20050', 'MultilayerPerceptron200100']
+modelArr = []
+
+for modelDict in mArr:
+    m = models[modelDict]
+    model = createAndSaveModel( m, indata, outdata, 
+                   ci.modelsDirectory)
+    ML.generateTestOutput(model, testingdata, ci.outputDataDirectory + 'outtesting_' + m['modelName'] + '.csv')

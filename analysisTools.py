@@ -24,7 +24,7 @@ def vote(testingDataArr):
     return vote
 
 
-directory = ci.testingDirectory
+directory = '/Users/JuanDa/Google Drive/Innocentive Marketing ML Challenge/OutputTestingData/currentVotes/'
 dataArr = []
 
 for f in os.listdir(directory):

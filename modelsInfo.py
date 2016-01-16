@@ -3,10 +3,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.naive_bayes import GaussianNB
 #from sklearn.naive_bayes import MultinomialNB
-#from sklearn.neural_network import MLPClassifier
+from sknn.mlp import Classifier, Layer
 from sklearn.ensemble import AdaBoostClassifier
-
-MLPClassifier = None
 
 models = {
     'RandomForest200':{
@@ -16,6 +14,12 @@ models = {
             'n_estimators':200,
             'n_jobs': -1
             },
+        'model': RandomForestClassifier,
+        'savedModelFileName':'rForest_n_200.mod',
+        'percentYesCorrect': None,
+        'percentNoCorrect': None, 
+        'numInstances': None, 
+            },
     'RandomForest200Entropy':{
         'modelName':'rForest_n_200_Ent',
         'modelArrParameters': None,
@@ -24,13 +28,9 @@ models = {
             'criterion': 'entropy',
             'n_estimators':200,
             'n_jobs': -1
-    },
+        },
         'model': RandomForestClassifier,
-        'savedModelFileName':'rForest_n_200.mod',
-        'percentYesCorrect': None,
-        'percentNoCorrect': None, 
-        'numInstances': None, 
-            },
+    },
     'NaiveBayesGaussian':{
         'modelName':'nBayes',
         'modelArrParameters': None,
@@ -40,12 +40,16 @@ models = {
         'percentYesCorrect': None,
         'percentNoCorrect': None, 
         'numInstances': None, 
-            },
+    },
     'MultilayerPerceptronStandard':{
         'modelName':'mlpStandard',
         'modelArrParameters': None,
-        'modelDictParameters': None, 
-        'model': MLPClassifier,
+        'modelDictParameters': {
+            'layers': [
+                Layer("Rectifier", units=200),
+                Layer("Softmax")]
+        }, 
+        'model': Classifier,
         'savedModelFileName':'mlpStandard.mod',
         'percentYesCorrect': None,
         'percentNoCorrect': None, 
@@ -55,9 +59,12 @@ models = {
         'modelName':'mlp10050',
         'modelArrParameters': None,
         'modelDictParameters': {
-            'hidden_layer_sizes': (100,50),
+            'layers': [
+                Layer("Rectifier", units=100),
+                Layer("Tanh", units=100),
+                Layer("Softmax")]
         }, 
-        'model': MLPClassifier,
+        'model': Classifier,
         'savedModelFileName':'mlp10050.mod',
         'percentYesCorrect': None,
         'percentNoCorrect': None, 
@@ -67,9 +74,13 @@ models = {
         'modelName':'mlp20050',
         'modelArrParameters': None,
         'modelDictParameters': {
-            'hidden_layer_sizes': (200,50),
+            'layers': [
+                Layer("Rectifier", units=200),
+                Layer("Tanh", units=50),
+                Layer("Softmax")],
+            'n_iter': 3
         }, 
-        'model': MLPClassifier,
+        'model': Classifier,
         'savedModelFileName':'mlp20050.mod',
         'percentYesCorrect': None,
         'percentNoCorrect': None, 
@@ -79,9 +90,12 @@ models = {
         'modelName':'mlp10050',
         'modelArrParameters': None,
         'modelDictParameters': {
-            'hidden_layer_sizes': (200,100),
+            'layers': [
+                Layer("Rectifier", units=200),
+                Layer("Tanh", units=100),
+                Layer("Softmax")]
         }, 
-        'model': MLPClassifier,
+        'model': Classifier,
         'savedModelFileName':'mlp200100.mod',
         'percentYesCorrect': None,
         'percentNoCorrect': None, 
@@ -100,4 +114,4 @@ models = {
         'numInstances': None, 
         
     }
-        }
+}
