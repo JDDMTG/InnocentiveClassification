@@ -3,7 +3,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.naive_bayes import GaussianNB
 #from sklearn.naive_bayes import MultinomialNB
-from sknn.mlp import Classifier, Layer
+#from sknn.mlp import Classifier, Layer
 from sklearn.ensemble import AdaBoostClassifier
 
 models = {
@@ -41,6 +41,31 @@ models = {
         'percentNoCorrect': None, 
         'numInstances': None, 
     },
+    'AdaboostDecisionTree':{
+        'modelName': 'adaboostDT',
+        'modelArrParameters': [DecisionTreeClassifier(max_depth=5)],
+        'modelDictParameters': {
+            'n_estimators': 200
+        }, 
+        'model': AdaBoostClassifier,
+        'savedModelFileName':'adaboost_decision_tree.mod',
+        'percentYesCorrect': None,
+        'percentNoCorrect': None, 
+        'numInstances': None, 
+        
+    },
+    'AdaboostRF': {
+        'modelName': 'adaboostRF',
+        'modelArrParameters': [RandomForestClassifier(n_estimators=9, max_depth=5)],
+        'modelDictParameters': {
+            'n_estimators':25
+        },
+        'model': AdaBoostClassifier,
+        'savedModelFileName': 'adaboost_random_forest.mod'
+    }
+}
+
+"""
     'MultilayerPerceptronStandard':{
         'modelName':'mlpStandard',
         'modelArrParameters': None,
@@ -101,17 +126,5 @@ models = {
         'percentNoCorrect': None, 
         'numInstances': None,         
     },
-    'AdaboostDecisionTree':{
-        'modelName': 'adaboostDT',
-        'modelArrParameters': [DecisionTreeClassifier(max_depth=5)],
-        'modelDictParameters': {
-            'n_estimators': 200
-        }, 
-        'model': AdaBoostClassifier,
-        'savedModelFileName':'adaboost_decision_tree.mod',
-        'percentYesCorrect': None,
-        'percentNoCorrect': None, 
-        'numInstances': None, 
-        
-    }
-}
+
+"""

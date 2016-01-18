@@ -12,7 +12,7 @@ def createAndSaveModel(modelDict, indata, outdata, outDict = ''):
 
 indata = load(ci.dataDirectory + ci.inputDataPath)
 outdata = load(ci.dataDirectory + ci.outputDataPath)
-testingdata = load(ci.dataDirectory + ci.testingInputPathFixed)
+
 
 
 """
@@ -30,12 +30,21 @@ for mlp in multilayerPerceptrons:
     
 """
 
-mArr = ['MultilayerPerceptronStandard', 'MultilayerPerceptron10050', 
-         'MultilayerPerceptron20050', 'MultilayerPerceptron200100']
+#mArr = ['MultilayerPerceptronStandard', 'MultilayerPerceptron10050', 
+#         'MultilayerPerceptron20050', 'MultilayerPerceptron200100']
+
+mArr = ['AdaboostRF']
 modelArr = []
 
 for modelDict in mArr:
     m = models[modelDict]
     model = createAndSaveModel( m, indata, outdata, 
                    ci.modelsDirectory)
-    ML.generateTestOutput(model, testingdata, ci.outputDataDirectory + 'outtesting_' + m['modelName'] + '.csv')
+    modelArr.append(model)
+
+testingdata = load(ci.dataDirectory + ci.testingInputPathFixed)
+
+for i in xrange(len(mArr)):
+    m = models[mArr[i]]
+    model = modelArr[i]
+    ML.generateTestOutput(model, testingdata, ci.outputTestingDirectory + 'outtesting_' + m['modelName'] + '.csv')
