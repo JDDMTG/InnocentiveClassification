@@ -33,7 +33,7 @@ for mlp in multilayerPerceptrons:
 #mArr = ['MultilayerPerceptronStandard', 'MultilayerPerceptron10050', 
 #         'MultilayerPerceptron20050', 'MultilayerPerceptron200100']
 
-mArr = ['AdaboostRF']
+mArr = ['AdaboostRFd_4_t_9_f_25', 'AdaboostRFd_6_t_9_f_25', 'AdaboostRFd_7_t_9_f_25']
 modelArr = []
 
 for modelDict in mArr:
@@ -47,4 +47,4 @@ testingdata = load(ci.dataDirectory + ci.testingInputPathFixed)
 for i in xrange(len(mArr)):
     m = models[mArr[i]]
     model = modelArr[i]
-    ML.generateTestOutput(model, testingdata, ci.outputTestingDirectory + 'outtesting_' + m['modelName'] + '.csv')
+    ML.generateTestOutput(model, testingdata, ci.outputTestingDirectory + m['savedModelFileName'] + '.csv')

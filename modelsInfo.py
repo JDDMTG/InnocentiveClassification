@@ -62,6 +62,33 @@ models = {
         },
         'model': AdaBoostClassifier,
         'savedModelFileName': 'adaboost_random_forest.mod'
+    },
+    'AdaboostRFd_4_t_9_f_25': {
+        'modelName': 'adaboostRF',
+        'modelArrParameters': [RandomForestClassifier(n_estimators=9, max_depth=4, n_jobs=-1)],
+        'modelDictParameters': {
+            'n_estimators':25,
+        },
+        'model': AdaBoostClassifier,
+        'savedModelFileName': 'adaboostrfd_4_t_9_f_24.mod'
+    },
+    'AdaboostRFd_6_t_9_f_25': {
+        'modelName': 'adaboostRF',
+        'modelArrParameters': [RandomForestClassifier(n_estimators=9, max_depth=6, n_jobs=-1)],
+        'modelDictParameters': {
+            'n_estimators':25,
+        },
+        'model': AdaBoostClassifier,
+        'savedModelFileName': 'adaboostrfd_6_t_9_f_24.mod'
+    },
+    'AdaboostRFd_7_t_9_f_25': {
+        'modelName': 'adaboostRF',
+        'modelArrParameters': [RandomForestClassifier(n_estimators=9, max_depth=7, n_jobs=-1)],
+        'modelDictParameters': {
+            'n_estimators':25,
+        },
+        'model': AdaBoostClassifier,
+        'savedModelFileName': 'adaboostrfd_7_t_9_f_24.mod'
     }
 }
 
